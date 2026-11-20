@@ -49,12 +49,12 @@ export const AudioPlayer: React.FC = () => {
         {isPlaying ? (
           <>
             <Volume2 className="w-4 h-4 animate-pulse text-white" />
-            <span className="text-xs font-medium pr-1">Musik Aktif</span>
+            <span className="text-xs font-medium pr-1">Beautiful In White 🎷</span>
           </>
         ) : (
           <>
             <VolumeX className="w-4 h-4 text-gray-400" />
-            <span className="text-xs font-medium text-gray-600">Musik</span>
+            <span className="text-xs font-medium text-gray-600">Putar Musik 🎵</span>
           </>
         )}
       </button>
