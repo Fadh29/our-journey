@@ -11,7 +11,7 @@ import {
   calculateTargetPlan,
   calculateCapacityPlan,
 } from '../../utils/financialCalculator';
-import { Target, Zap, FileDown, Info } from 'lucide-react';
+import { Target, Zap, FileDown } from 'lucide-react';
 import { generateFinancialPlanPDF } from '../../utils/pdfGenerator';
 import { BudgetItem } from '../../types/budget';
 
@@ -81,11 +81,10 @@ export const FinancialPlannerSection: React.FC<FinancialPlannerSectionProps> = (
         <div className="flex items-center gap-2 w-full sm:w-auto">
           <button
             onClick={() => setActiveMode('target')}
-            className={`flex-1 sm:flex-initial px-5 py-2.5 rounded-xl font-medium text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
-              activeMode === 'target'
+            className={`flex-1 sm:flex-initial px-5 py-2.5 rounded-xl font-medium text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${activeMode === 'target'
                 ? 'bg-white text-blush-600 shadow-soft font-semibold'
                 : 'text-gray-600 hover:text-blush-600'
-            }`}
+              }`}
           >
             <Target className="w-4 h-4" />
             <span>Mode A — Target-Based</span>
@@ -93,11 +92,10 @@ export const FinancialPlannerSection: React.FC<FinancialPlannerSectionProps> = (
 
           <button
             onClick={() => setActiveMode('capacity')}
-            className={`flex-1 sm:flex-initial px-5 py-2.5 rounded-xl font-medium text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
-              activeMode === 'capacity'
+            className={`flex-1 sm:flex-initial px-5 py-2.5 rounded-xl font-medium text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${activeMode === 'capacity'
                 ? 'bg-white text-blush-600 shadow-soft font-semibold'
                 : 'text-gray-600 hover:text-blush-600'
-            }`}
+              }`}
           >
             <Zap className="w-4 h-4" />
             <span>Mode B — Capacity-Based</span>
@@ -149,12 +147,12 @@ export const FinancialPlannerSection: React.FC<FinancialPlannerSectionProps> = (
       />
 
       {/* Simulation Notice */}
-      <div className="mt-8 p-4 rounded-2xl bg-white border border-rose-100 flex items-start gap-3 text-xs text-gray-500 shadow-xs">
+      {/* <div className="mt-8 p-4 rounded-2xl bg-white border border-rose-100 flex items-start gap-3 text-xs text-gray-500 shadow-xs">
         <Info className="w-4 h-4 text-blush-500 shrink-0 mt-0.5" />
         <p className="leading-relaxed">
           <strong className="text-gray-700">Catatan Simulasi:</strong> Seluruh angka dihitung langsung di peramban browser Anda tanpa bunga, investasi, atau inflasi. Perhitungan ini dirancang sebagai acuan disiplin menabung bersama yang fleksibel dan dapat diubah kapan pun sesuai kesepakatan berdua.
         </p>
-      </div>
+      </div> */}
     </section>
   );
 };
