@@ -1,24 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Volume2, VolumeX, SkipForward } from 'lucide-react';
-
-interface Track {
-  title: string;
-  src: string;
-  badge: string;
-}
-
-const playlist: Track[] = [
-  {
-    title: "Nothing's Gonna Change My Love for You",
-    src: './audio/nothings-gonna-change.mp3',
-    badge: '🎷',
-  },
-  {
-    title: 'Beautiful In White',
-    src: './audio/romantic-bgm.mp3',
-    badge: '💍',
-  },
-];
+import { Volume2, VolumeX, SkipForward, SkipBack } from 'lucide-react';
+import { romanticPlaylist } from '../../data/playlist';
 
 export const AudioPlayer: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -26,7 +8,8 @@ export const AudioPlayer: React.FC = () => {
   const [hasError, setHasError] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const currentTrack = playlist[currentTrackIndex];
+  const playlist = romanticPlaylist;
+  const currentTrack = playlist[currentTrackIndex] || playlist[0];
 
   const playAudio = () => {
     if (!audioRef.current) return;
@@ -59,7 +42,13 @@ export const AudioPlayer: React.FC = () => {
     setCurrentTrackIndex(nextIndex);
   };
 
-  // When track changes, if it was playing, play the new one
+  const handlePrevTrack = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    const prevIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
+    setCurrentTrackIndex(prevIndex);
+  };
+
+  // When track changes, if it was playing, load and play the new one
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.load();
@@ -86,6 +75,20 @@ export const AudioPlayer: React.FC = () => {
             : 'bg-white/95 text-gray-700 border-rose-200 hover:text-blush-600 hover:bg-rose-50'
         }`}
       >
+        {playlist.length > 1 && (
+          <button
+            onClick={handlePrevTrack}
+            title="Lagu Sebelumnya"
+            className={`p-1 rounded-full transition-colors cursor-pointer ${
+              isPlaying
+                ? 'hover:bg-rose-600 text-rose-100 hover:text-white'
+                : 'hover:bg-rose-100 text-gray-400 hover:text-blush-600'
+            }`}
+          >
+            <SkipBack className="w-3.5 h-3.5" />
+          </button>
+        )}
+
         <button
           onClick={togglePlay}
           title={isPlaying ? 'Jeda Musik' : 'Putar Musik Latar'}
@@ -94,7 +97,7 @@ export const AudioPlayer: React.FC = () => {
           {isPlaying ? (
             <>
               <Volume2 className="w-4 h-4 animate-pulse text-white shrink-0" />
-              <span className="text-xs font-medium max-w-[150px] sm:max-w-[200px] truncate">
+              <span className="text-xs font-medium max-w-[140px] sm:max-w-[180px] truncate">
                 {currentTrack.title} {currentTrack.badge}
               </span>
             </>
@@ -106,18 +109,19 @@ export const AudioPlayer: React.FC = () => {
           )}
         </button>
 
-        {/* Next track switch button */}
-        <button
-          onClick={handleNextTrack}
-          title={`Ganti ke: ${playlist[(currentTrackIndex + 1) % playlist.length].title}`}
-          className={`p-1 rounded-full transition-colors cursor-pointer ${
-            isPlaying
-              ? 'hover:bg-rose-600 text-rose-100 hover:text-white'
-              : 'hover:bg-rose-100 text-gray-400 hover:text-blush-600'
-          }`}
-        >
-          <SkipForward className="w-3.5 h-3.5" />
-        </button>
+        {playlist.length > 1 && (
+          <button
+            onClick={handleNextTrack}
+            title={`Lagu Berikutnya: ${playlist[(currentTrackIndex + 1) % playlist.length].title}`}
+            className={`p-1 rounded-full transition-colors cursor-pointer ${
+              isPlaying
+                ? 'hover:bg-rose-600 text-rose-100 hover:text-white'
+                : 'hover:bg-rose-100 text-gray-400 hover:text-blush-600'
+            }`}
+          >
+            <SkipForward className="w-3.5 h-3.5" />
+          </button>
+        )}
       </div>
 
       {hasError && (
