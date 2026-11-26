@@ -19,6 +19,7 @@ export const App: React.FC = () => {
   const [isUnlocked, setIsUnlocked] = useState<boolean>(() => {
     return sessionStorage.getItem('our_journey_unlocked') === 'true';
   });
+  const [shouldAutoPlay, setShouldAutoPlay] = useState<boolean>(false);
 
   // Shared Wedding Budget State
   const [totalWeddingBudget, setTotalWeddingBudget] = useState<number>(defaultTotalBudget);
@@ -27,6 +28,7 @@ export const App: React.FC = () => {
   const handleUnlock = () => {
     sessionStorage.setItem('our_journey_unlocked', 'true');
     setIsUnlocked(true);
+    setShouldAutoPlay(true);
   };
 
   const handleLock = () => {
@@ -77,7 +79,7 @@ export const App: React.FC = () => {
       </main>
 
       <Footer />
-      <AudioPlayer />
+      <AudioPlayer autoPlay={shouldAutoPlay} />
     </div>
   );
 };
